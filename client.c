@@ -17,7 +17,6 @@ struct client_state {
   struct ui_state ui;
   SSL_CTX *ssl_ctx;
   SSL *ssl;
-  /* TODO client state variables go here */
 };
 
 
@@ -44,7 +43,6 @@ int create_user(const char *msg){
     return 0;
   }
 
-  //TODO IMPORTANT! clean username before calling system command
   char cmd[strlen(username) + 32];
   snprintf(cmd, sizeof(cmd), "./ttp.sh create-user %s", username);
   printf("%s", cmd);
@@ -212,9 +210,7 @@ static int handle_incoming(struct client_state *state) {
 
   assert(state);
 
-  /* TODO if we have work queued up, this might be a good time to do it */
 
-  /* TODO ask user for input if needed */
 
   /* list file descriptors to wait for */
   FD_ZERO(&readfds);
@@ -234,9 +230,7 @@ static int handle_incoming(struct client_state *state) {
   if (FD_ISSET(STDIN_FILENO, &readfds)) {
     return client_process_command(state);
   }
-  /* TODO once you implement encryption you may need to call ssl_has_data
-   * here due to buffering (see ssl-nonblock example)
-   */
+
   if (state->api.use_tls && SSL_pending(state->api.ssl) > 0) {
     return handle_server_request(state);
   }
@@ -252,7 +246,6 @@ static int client_state_init(struct client_state *state) {
   /* initialize UI */
   ui_state_init(&state->ui);
 
-  /* TODO any additional client state initialization */
  
 
   return 0;
@@ -260,7 +253,6 @@ static int client_state_init(struct client_state *state) {
 
 static void client_state_free(struct client_state *state) {
 
-  /* TODO any additional client state cleanup */
 
   /* cleanup API state */
   api_state_free(&state->api);
@@ -297,7 +289,6 @@ int main(int argc, char **argv) {
   setvbuf(stdout, NULL, _IONBF, 0);
 
 
-  /* TODO any additional client initialization */
 
   SSL_library_init();
   SSL_load_error_strings();
@@ -334,9 +325,9 @@ int main(int argc, char **argv) {
   while (!state.eof && handle_incoming(&state) == 0);
 
   /* clean up */
-  /* TODO any additional client cleanup */
   client_state_free(&state);
   close(fd);
 
   return 0;
 }
+
