@@ -452,7 +452,6 @@ int main(int argc, char **argv) {
   /* preparations */
   server_state_init(&state);
   register_signals();
-  /* TODO any additional server initialization */
 
   /* start listening for connections */
   state.sockfd = create_server_socket(port);
@@ -465,9 +464,9 @@ int main(int argc, char **argv) {
   }
 
   /* clean up */
-  /* TODO any additional server cleanup */
   server_state_free(&state);
   close(state.sockfd);
 
   return 0;
 }
+
