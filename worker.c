@@ -708,7 +708,6 @@ static int worker_state_init(
   /* set up API state */
   api_state_init(&state->api, connfd);
 
-  /* TODO any additional worker state initialization */
   int sqlite_status = sqlite3_open("chat.db", &state->db);
   if (sqlite_status != SQLITE_OK) {
       fprintf(stderr, "error when opening database: %s\n",
@@ -813,7 +812,6 @@ void worker_start(
   if (worker_state_init(&state, connfd, server_fd, pkey,server_cert, ca_cert) != 0) {
     goto cleanup;
   }
-  /* TODO any additional worker initialization */
   setvbuf(stdout, NULL, _IONBF, 0);
 
 
@@ -828,10 +826,10 @@ void worker_start(
 
 cleanup:
   /* cleanup worker */
-  /* TODO any additional worker cleanup */
   worker_state_free(&state);
 
   exit(success ? 0 : 1);
   }
+
 
 
