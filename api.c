@@ -50,15 +50,6 @@ int api_recv(struct api_state *state, struct api_msg *msg) {
 }
 
 
-/**
- * @brief         Clean up information stored in @msg
- * @param msg     Information about message to be cleaned up
- */
-void api_recv_free(struct api_msg *msg) {
-  /* TODO clean up state allocated for msg */
-}
-
-
 int api_send( struct api_state *state, const char *msg){
   
   assert(state);
@@ -91,7 +82,6 @@ void api_state_free(struct api_state *state) {
 
   assert(state);
 
-  /* TODO clean up API state */
 }
 
 
@@ -111,5 +101,5 @@ void api_state_init(struct api_state *state, int fd) {
   /* store connection socket */
   state->fd = fd;
 
-  /* TODO initialize API state */
 }
+
